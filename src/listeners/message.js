@@ -171,8 +171,6 @@ async function getPubgTops(message, extendedArgs){
       let mappedRevives = formattedResp.map(player => player.revives).join('\n')
       let mappedTeamkills = formattedResp.map(player => player.teamkills).join('\n')
 
-      console.log(extendedArgs)
-
       let extendedStats = (extendedArgs[2] == 'extended') ? true : false
 
       let fields = [

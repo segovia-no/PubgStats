@@ -4,7 +4,7 @@
   "description": "a speedrun records platform for discord channels",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist/server.js",
+    "start": "node ./dist/index.js",
     "dev": "nodemon --exec babel-node ./src/index.js",
     "build": "npm run clean && mkdir dist && babel src -s -d dist",
     "clean": "rimraf ./dist",
