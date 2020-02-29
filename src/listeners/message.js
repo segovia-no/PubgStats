@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-let prefix = process.env.PREFIX || '!'
+let prefix = process.env.PREFIX || '!manco'
 
 let playersList = [
 
@@ -63,22 +63,62 @@ function messageListener(message){
     return false
   }
 
-  if(message.content == prefix + 'server'){
-		message.channel.send(`This server's name is: ${message.guild.name} \n Total members: ${message.guild.memberCount}`)
-  }
+  if(message.content.startsWith(prefix) && !message.author.bot){
 
-  if(message.content == prefix + 'pubg'){
-    getPubgTops(message)
+    const args = message.content.split(' ')
+
+    let extendedArgs = []
+
+    for(let i = 0 ; i < args.length ; i++){
+      if(args[i] && i != 0){
+        extendedArgs.push(args[i].toLowerCase())
+      }
+    }
+
+    switch(extendedArgs[0]){
+
+      case 'serverinfo':
+        message.channel.send(`This server's name is: ${message.guild.name} \n Total members: ${message.guild.memberCount}`)
+        break
+
+      case 'pubg':
+        getPubgTops(message, extendedArgs)
+        break
+
+      default:
+        message.channel.send(`The command you entered is invalid`)
+        break
+
+    }
+
   }
   
   return true
 
 }
 
-async function getPubgTops(message){
+async function getPubgTops(message, extendedArgs){
   try{
 
-    let baseURL = 'https://api.pubg.com/shards/steam/seasons/division.bro.official.pc-2018-06/gameMode/squad/players/?filter[playerIds]='
+    let gameMode = 'squad'
+
+    switch(extendedArgs[0]){
+
+      case 'squad':
+        gameMode = 'squad'
+        break
+
+      case 'duo':
+        gameMode = 'duo'
+        break
+
+      case 'solo':
+        gameMode = 'solo'
+        break
+
+    }
+
+    let baseURL = `https://api.pubg.com/shards/steam/seasons/division.bro.official.pc-2018-06/gameMode/${gameMode}/players/?filter[playerIds]=`
 
     let preppedURL = baseURL + playersList.map(player => player.accountId).join(',')
 
@@ -100,7 +140,7 @@ async function getPubgTops(message){
             playername: playersList[foundIndex].nick,
             kills: player.attributes.gameModeStats.squad.kills,
             deaths: player.attributes.gameModeStats.squad.losses,
-            kd: (player.attributes.gameModeStats.squad.kills/player.attributes.gameModeStats.squad.losses).toFixed(2),
+            kd: (player.attributes.gameModeStats.squad.kills/player.attributes.gameModeStats.squad.losses).toFixed(3),
             matches: player.attributes.gameModeStats.squad.roundsPlayed,
             wins: player.attributes.gameModeStats.squad.wins,
             revives: player.attributes.gameModeStats.squad.revives,
@@ -131,18 +171,29 @@ async function getPubgTops(message){
       let mappedRevives = formattedResp.map(player => player.revives).join('\n')
       let mappedTeamkills = formattedResp.map(player => player.teamkills).join('\n')
 
+      console.log(extendedArgs)
+
+      let extendedStats = (extendedArgs[2] == 'extended') ? true : false
+
+      let fields = [
+        { name: "Nombre", value: mappedNicks, inline: true},
+        { name: "K/D", value: mappedKDS, inline: true},
+        { name: "🍗/Partidas", value: mappedWinMatch, inline: true}
+      ]
+
+      if(extendedStats){
+        fields.push(
+          { name: "Pollitos", value: mappedWins, inline: true},
+          { name: "Revividos", value: mappedRevives, inline: true},
+          { name: "# Traiciones", value: mappedTeamkills, inline: true}
+        )
+      }
+
       message.channel.send({
         embed: {
           color: 3447003,
-          title: "Los kd's del ManZooTeam:",
-          fields: [
-            { name: "Nombre", value: mappedNicks, inline: true},
-            { name: "K/D", value: mappedKDS, inline: true},
-            { name: "🍗/Partidas", value: mappedWinMatch, inline: true},
-            { name: "Pollitos", value: mappedWins, inline: true},
-            { name: "Revividos", value: mappedRevives, inline: true},
-            { name: "# Traiciones", value: mappedTeamkills, inline: true}
-          ]
+          title: `Los kd's del ManZooTeam (${gameMode}):`,
+          fields: fields
         }
       })
 
