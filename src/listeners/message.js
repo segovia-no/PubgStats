@@ -102,7 +102,7 @@ async function getPubgTops(message, extendedArgs){
 
     let gameMode = 'squad'
 
-    switch(extendedArgs[0]){
+    switch(extendedArgs[1]){
 
       case 'squad':
         gameMode = 'squad'
