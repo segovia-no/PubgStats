@@ -181,7 +181,7 @@ async function getPubgTops(message, extendedArgs){
 
       if(extendedStats){
         fields.push(
-          { name: "Pollitos", value: mappedWins, inline: true},
+          { name: "Nombre", value: mappedNicks, inline: true},
           { name: "Revividos", value: mappedRevives, inline: true},
           { name: "# Traiciones", value: mappedTeamkills, inline: true}
         )
