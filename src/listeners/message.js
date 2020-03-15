@@ -46,6 +46,10 @@ let playersList = [
   {
     nick: 'Goroum',
     accountId: 'account.7081c11b7a1243a2ad94e0946bf53182'
+  },
+  {
+    nick: 'jesuchristianV',
+    accountId: 'account.b97248333e89421390f914a1e5f5c236'
   }
 ]
 
