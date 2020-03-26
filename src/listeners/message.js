@@ -51,6 +51,18 @@ const playersList = [
   {
     nick: 'CRISTOPRO',
     accountId: 'account.aa2ebfc81c5c44ca9f4f3a0eaf7e4592'
+  },
+  {
+    nick: 'Goroum',
+    accountId: 'account.7081c11b7a1243a2ad94e0946bf53182'
+  },
+  {
+    nick: 'LyevTrotsky',
+    accountId: 'account.db1fb1ffbb934af489c7c74ebee0f7b6'
+  },
+  {
+    nick: 'Dresan26',
+    accountId: 'account.42090cba0ee84ff3a15c151484640f59'
   }
 
 ]
