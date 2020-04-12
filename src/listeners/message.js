@@ -156,7 +156,7 @@ async function getPubgTops(message, extendedArgs){
     }
 
     //iterate players with API
-    let baseURL = `https://api.pubg.com/shards/steam/seasons/division.bro.official.pc-2018-06/gameMode/${gameMode}/players/?filter[playerIds]=`
+    let baseURL = `https://api.pubg.com/shards/steam/seasons/division.bro.official.pc-2018-07/gameMode/${gameMode}/players/?filter[playerIds]=`
 
 
     let respArray = []
