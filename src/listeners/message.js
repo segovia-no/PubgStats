@@ -182,11 +182,17 @@ async function getPubgTops(message, extendedArgs){
 
           if(foundIndex != -1){
 
+            let kd = (player.attributes.gameModeStats.squad.kills/player.attributes.gameModeStats.squad.losses)
+
+            if(isNaN(kd)){
+              kd = 0
+            }
+
             formattedResp.push({
               playername: playersList[foundIndex].nick,
               kills: player.attributes.gameModeStats.squad.kills,
               deaths: player.attributes.gameModeStats.squad.losses,
-              kd: (player.attributes.gameModeStats.squad.kills/player.attributes.gameModeStats.squad.losses).toFixed(3),
+              kd: kd.toFixed(3),
               matches: player.attributes.gameModeStats.squad.roundsPlayed,
               wins: player.attributes.gameModeStats.squad.wins,
               revives: player.attributes.gameModeStats.squad.revives,
