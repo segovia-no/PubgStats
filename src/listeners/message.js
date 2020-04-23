@@ -219,7 +219,7 @@ async function getPubgTops(message, extendedArgs){
 
     //format and send to discord table
     let mappedNicks = formattedResp.map(player => player.playername).join('\n')
-    let mappedKDS = formattedResp.map(player => player.kd).join('\n')
+    let mappedKDS = formattedResp.map(player => player.kd + ' | ' + player.kills + '/' + player.deaths).join('\n')
     let mappedWinMatch = formattedResp.map(player => player.wins + '/' + player.matches).join('\n')
     let mappedWins = formattedResp.map(player => player.wins).join('\n')
     let mappedRevives = formattedResp.map(player => player.revives).join('\n')
